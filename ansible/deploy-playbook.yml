@@ -1,0 +1,78 @@
+- hosts: web
+  become: yes
+
+  tasks:
+
+    - name: install nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: remove default page
+      file:
+        path: /var/www/html/index.nginx-debian.html
+        state: absent
+
+    - name: upload website
+      copy:
+        src: site/
+        dest: /var/www/html/
+        owner: www-data
+        group: www-data
+        mode: '0755'
+
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+- hosts: web
+  become: yes
+
+  tasks:
+
+    - name: install nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: start nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: remove default page
+      file:
+        path: /var/www/html/index.nginx-debian.html
+        state: absent
+
+    - name: upload website
+      copy:
+        src: site/
+        dest: /var/www/html/
+        owner: www-data
+        group: www-data
+        mode: '0755'
+
+    # React routing fix (VERY IMPORTANT)
+    - name: configure nginx for SPA
+      copy:
+        dest: /etc/nginx/sites-available/default
+        content: |
+          server {
+              listen 80;
+              root /var/www/html;
+              index index.html;
+
+              location / {
+                  try_files $uri /index.html;
+              }
+          }
+
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+
