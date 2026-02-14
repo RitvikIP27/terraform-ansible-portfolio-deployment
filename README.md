@@ -21,8 +21,15 @@ Terraform provisions infrastructure • Ansible configures server • Nginx serv
 ## Terraform Provisioning
 <img src="screenshots/init.png" width="700"/>
 
-## SSH Key Automation
+## Terraform key creation
 <img src="screenshots/createkeyterrafrom.png" width="700"/>
+
+## Final website shown
+<img src="screenshots/finally.png" width="700"/>
+
+
+## SSH Key Automation
+<img src="screenshots/OpenSSHkeyissue.png" width="700"/>
 
 ## Configuration with Ansible
 <img src="screenshots/finally.png" width="700"/>
